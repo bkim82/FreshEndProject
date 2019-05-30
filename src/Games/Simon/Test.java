@@ -10,48 +10,42 @@ import javafx.stage.Stage;
 
 public class Test extends Application {
 
-    public Arc make(int start){
-        Arc a = new Arc();
-        a.setCenterX(250);
-        a.setCenterY(250);
-        a.setStartAngle(start);
-        a.setLength(90);
-        a.setRadiusY(50);
-        a.setRadiusX(50);
-        return a;
+
+    public static Button create(String style, Color stroke, double translateX, double translateY, Pane pane){
+        Button b = new Button();
+        b.setStyle("-fx-background-color: #" + style);
+        b.setBorder(new Border(new BorderStroke(stroke,
+                BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderStroke.MEDIUM)));
+        b.translateYProperty().bind(pane.heightProperty().divide(translateY));
+        b.translateXProperty().bind(pane.widthProperty().divide(translateX));
+        return b;
     }
 
-    public void start (Stage primaryStage){
-
+    @Override
+    public void start(Stage primaryStage){
 
 
         Pane pane = new Pane();
         pane.setStyle("-fx-background-color: #404040");
 
-        Button yellow = new Button();
-        yellow.setStyle("-fx-background-color: #ffff66");
-//        yellow.setTranslateY();
-//        yellow.setTranslateX();
+        Button yellow = create("ffff66", Color.LIGHTGOLDENRODYELLOW, 1.7,5.5, pane);
+        yellow.prefHeightProperty().bind(pane.heightProperty().divide(4));
+        yellow.prefWidthProperty().bind(pane.widthProperty().divide(4));
 
-        Button red = new Button();
-        red.setStyle("-fx-background-color: #ff3300");
-//        red.setTranslateY();
-//        red.setTranslateX();
+        Button red = create("ff3300", Color.PINK, 5.5,  1.7, pane);
+        red.prefHeightProperty().bind(pane.heightProperty().divide(4));
+        red.prefWidthProperty().bind(pane.widthProperty().divide(4));
 
-        Button green = new Button();
-        green.setStyle("-fx-background-color: #55aa33");
-//        green.setTranslateY();
-//        green.setTranslateX();
 
-        Button blue = new Button();
-        blue.setShape(make(270));
-        blue.setStyle("-fx-background-color: #0099ff");
-        blue.setBorder(new Border(new BorderStroke(Color.LIGHTBLUE,
-                BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
-        blue.setTranslateY(100);
-        blue.setTranslateX(100);
+        Button green = create("55aa33", Color.LIGHTGREEN, 1.7, 1.7, pane);
+        green.prefHeightProperty().bind(pane.heightProperty().divide(4));
+        green.prefWidthProperty().bind(pane.widthProperty().divide(4));
 
-        pane.getChildren().add(blue);
+
+        Button blue = create("0099ff", Color.LIGHTBLUE, 5.5, 5.5, pane);
+        blue.prefHeightProperty().bind(pane.heightProperty().divide(4));
+        blue.prefWidthProperty().bind(pane.widthProperty().divide(4));
+        pane.getChildren().addAll(blue, yellow, green, red);
 
 
         Scene scene = new Scene(pane, 500, 500);

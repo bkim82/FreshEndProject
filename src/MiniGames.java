@@ -23,7 +23,7 @@ public class MiniGames extends Application {
         text.setFont(Font.font("Times Roman", FontWeight.BOLD, FontPosture.ITALIC, 50));
         p.getChildren().add(text);
 
-        gp.add(new ImageView(new Image("image/og_image.jpg")), 0, 0);f
+        gp.add(new ImageView(new Image("image/og_image.jpg")), 0, 0);
 
         bp.setTop(p);
         bp.setCenter(gp);
