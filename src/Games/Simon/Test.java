@@ -3,6 +3,7 @@ package Games.Simon;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -10,10 +11,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-
-import java.lang.reflect.Array;
-import java.sql.SQLOutput;
-import java.util.Arrays;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 
@@ -30,10 +29,17 @@ public class Test extends Application {
         return b;
     }
 
+//    public static void change(int  turn, Button color){
+//        Timer timer = new Timer();
+//        timer.schedule();
+//        color.setStyle("-fx-background-color: #404040");
+//    }
+
     @Override
     public void start(Stage primaryStage){
 
         AtomicBoolean started = new AtomicBoolean(false);
+        int turn = 1;
 
         Pane pane = new Pane();
         pane.setStyle("-fx-background-color: #404040");
@@ -89,9 +95,16 @@ public class Test extends Application {
         start.layoutYProperty().bind(pane.heightProperty().divide(50));
         start.layoutXProperty().bind(pane.widthProperty().divide(1.6));
 
-        pane.getChildren().addAll(blue, yellow, green, red, logo, wrong, right, start);
+        Label counter = new Label();
+        counter.setText("0 / " + turn);
+        counter.translateXProperty().bind(pane.widthProperty().divide(10));
+        counter.translateYProperty().bind(pane.heightProperty().divide(2.2));
+        counter.maxHeightProperty().bind(pane.heightProperty().divide(7));
+        counter.maxWidthProperty().bind(pane.widthProperty().divide(4));
+        counter.setFont(Font.font("Oswald", 40));
+        counter.setTextFill(Color.BLACK);
 
-
+        pane.getChildren().addAll(blue, yellow, green, red, logo, wrong, right, start, counter);
 
         int[] order = new int[100];
         for (int i = 0; i < 100; i++){
@@ -102,8 +115,56 @@ public class Test extends Application {
         start.setOnMousePressed(e -> {
             pane.getChildren().remove(start);
             started.set(true);
-
         });
+
+        yellow.setOnMouseEntered(e -> {
+            yellow.setStyle("-fx-background-color: #ffffbb");
+        });
+
+        yellow.setOnMouseExited(e -> {
+            yellow.setStyle("-fx-background-color: #ffff66");
+        });
+
+        red.setOnMouseEntered(e -> {
+            red.setStyle("-fx-background-color: #ff6666");
+        });
+
+        red.setOnMouseExited(e -> {
+            red.setStyle("-fx-background-color: #ff3300");
+        });
+
+        green.setOnMouseEntered(e -> {
+            green.setStyle("-fx-background-color: #33cc33");
+        });
+
+        green.setOnMouseExited(e -> {
+            green.setStyle("-fx-background-color: #55aa33");
+        });
+
+        blue.setOnMouseEntered(e -> {
+            blue.setStyle("-fx-background-color: #99ccff");
+        });
+
+        blue.setOnMouseExited(e -> {
+            blue.setStyle("-fx-background-color: #0099ff");
+        });
+
+        if (started.get()){
+            Button color;
+            if (order[turn] == 1){
+                color = blue;
+            }
+            else if (order[turn] == 2){
+                color = yellow;
+            }
+            else if (order[turn] == 3){
+                color = red;
+            }
+            else{
+                color = green;
+            }
+//            change(turn, color);
+        }
 
         Scene scene = new Scene(pane, 500, 500);
         primaryStage.setScene(scene);
