@@ -15,9 +15,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-
 public class Test extends Application {
-
 
     public static Button create(String style, Color stroke, double translateX, double translateY, Pane pane){
         Button b = new Button();
@@ -28,12 +26,6 @@ public class Test extends Application {
         b.translateXProperty().bind(pane.widthProperty().divide(translateX));
         return b;
     }
-
-//    public static void change(int  turn, Button color){
-//        Timer timer = new Timer();
-//        timer.schedule();
-//        color.setStyle("-fx-background-color: #404040");
-//    }
 
     @Override
     public void start(Stage primaryStage){
@@ -51,7 +43,6 @@ public class Test extends Application {
         Button red = create("ff3300", Color.PINK, 5.5,  1.7, pane);
         red.prefHeightProperty().bind(pane.heightProperty().divide(4));
         red.prefWidthProperty().bind(pane.widthProperty().divide(4));
-
 
         Button green = create("55aa33", Color.LIGHTGREEN, 1.7, 1.7, pane);
         green.prefHeightProperty().bind(pane.heightProperty().divide(4));
@@ -151,6 +142,7 @@ public class Test extends Application {
 
         if (started.get()){
             Button color;
+            pane.getChildren().remove(green);
             if (order[turn] == 1){
                 color = blue;
             }
@@ -163,7 +155,7 @@ public class Test extends Application {
             else{
                 color = green;
             }
-//            change(turn, color);
+
         }
 
         Scene scene = new Scene(pane, 500, 500);
