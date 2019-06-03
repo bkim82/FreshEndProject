@@ -1,7 +1,9 @@
 package Games.Simon;
 
+import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -30,7 +32,6 @@ public class Test extends Application {
     @Override
     public void start(Stage primaryStage){
 
-        AtomicBoolean started = new AtomicBoolean(false);
         int turn = 1;
 
         Pane pane = new Pane();
@@ -103,11 +104,6 @@ public class Test extends Application {
             order[i] = num;
         }
 
-        start.setOnMousePressed(e -> {
-            pane.getChildren().remove(start);
-            started.set(true);
-        });
-
         yellow.setOnMouseEntered(e -> {
             yellow.setStyle("-fx-background-color: #ffffbb");
         });
@@ -140,23 +136,17 @@ public class Test extends Application {
             blue.setStyle("-fx-background-color: #0099ff");
         });
 
-        if (started.get()){
-            Button color;
-            pane.getChildren().remove(green);
-            if (order[turn] == 1){
-                color = blue;
-            }
-            else if (order[turn] == 2){
-                color = yellow;
-            }
-            else if (order[turn] == 3){
-                color = red;
-            }
-            else{
-                color = green;
-            }
+        start.setOnMousePressed(e -> {
+            pane.getChildren().remove(start);
 
-        }
+            new AnimationTimer(){
+                public void handle(long currentNanoTime){
+
+                }
+            }.start();
+        });
+
+
 
         Scene scene = new Scene(pane, 500, 500);
         primaryStage.setScene(scene);
