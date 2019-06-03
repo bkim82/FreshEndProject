@@ -1,3 +1,6 @@
+package Games;
+
+import Games.Simon.Test;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -20,9 +23,17 @@ public class MiniGames extends Application {
         HBox fp = new HBox(10);
         HBox fp2 = new HBox(10);
         fp.setAlignment(Pos.CENTER);
+        fp2.setAlignment(Pos.CENTER);
+
+        Button minesweeper = new Button("Play!");
+        Button snake = new Button ("Play!");
+        Button simon = new Button ("Play!");
+        Button breakout = new Button ("Play!");
+
+
 
         Label text = new Label("Mini Games!");
-        text.setFont(Font.font("Times Roman", FontWeight.BOLD, FontPosture.ITALIC, 50));
+        text.setFont(Font.font("Times Roman", FontWeight.BOLD, FontPosture.ITALIC, 100));
         p.getChildren().add(text);
 
         Image image = new Image("image/free-minesweeper-thumbnail.png");
@@ -37,13 +48,24 @@ public class MiniGames extends Application {
 
         Image image3 = new Image("image/simon.jpg");
         ImageView view3 = new ImageView(image3);
-        view3.fitHeightProperty().bind(fp2.heightProperty().divide(3));
-        view3.fitWidthProperty().bind(fp2.widthProperty().divide(3));
+        view3.fitHeightProperty().bind(fp.heightProperty().divide(3));
+        view3.fitWidthProperty().bind(fp.widthProperty().divide(3));
+
+        Image image4 = new Image("image/breakout.jpg");
+        ImageView view4 = new ImageView(image4);
+        view4.fitHeightProperty().bind(fp.heightProperty().divide(3));
+        view4.fitWidthProperty().bind(fp.widthProperty().divide(3));
 
 
 
-        fp.getChildren().addAll(view, view2);
-        fp2.getChildren().addAll(view3);
+        fp.getChildren().addAll(view, minesweeper, view2, snake);
+        fp2.getChildren().addAll(view3,simon,view4, breakout);
+
+        simon.setOnAction(e -> {
+
+
+            }
+        });
 
 
         bp.setTop(p);
@@ -53,7 +75,7 @@ public class MiniGames extends Application {
         bp.setBottom(fp2);
 
 
-        Scene scene = new Scene(bp,700,500);
+        Scene scene = new Scene(bp,1000,1000);
         ps.setScene(scene);
         ps.show();
         bp.requestFocus();
