@@ -1,6 +1,8 @@
 package Games.Simon;
 
 import javafx.animation.AnimationTimer;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.canvas.GraphicsContext;
@@ -13,8 +15,11 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import javafx.util.Duration;
+
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Test extends Application {
@@ -29,6 +34,28 @@ public class Test extends Application {
         return b;
     }
 
+    public static void light(Button color, String valueEnd, String valueStart){
+        Timeline t = new Timeline(
+                new KeyFrame(
+                        Duration.millis(700),
+                        e -> {
+                            color.setStyle("-fx-background-color: #" + valueStart);
+                        })
+        );
+        t.play();
+        color.setStyle("-fx-background-color: #" + valueEnd);
+    }
+
+    public static void setBlink(Button color, String valueEnd, String valueStart){
+        color.setOnMouseEntered(e -> {
+            color.setStyle("-fx-background-color: #" + valueEnd);
+        });
+
+        color.setOnMouseExited(e -> {
+            color.setStyle("-fx-background-color: #" + valueStart);
+        });
+    }
+
     @Override
     public void start(Stage primaryStage){
 
@@ -41,7 +68,7 @@ public class Test extends Application {
         yellow.prefHeightProperty().bind(pane.heightProperty().divide(4));
         yellow.prefWidthProperty().bind(pane.widthProperty().divide(4));
 
-        Button red = create("ff3300", Color.PINK, 5.5,  1.7, pane);
+        Button red = create("ff3300", Color.PINK.brighter().brighter(), 5.5,  1.7, pane);
         red.prefHeightProperty().bind(pane.heightProperty().divide(4));
         red.prefWidthProperty().bind(pane.widthProperty().divide(4));
 
@@ -104,49 +131,30 @@ public class Test extends Application {
             order[i] = num;
         }
 
-        yellow.setOnMouseEntered(e -> {
-            yellow.setStyle("-fx-background-color: #ffffbb");
-        });
-
-        yellow.setOnMouseExited(e -> {
-            yellow.setStyle("-fx-background-color: #ffff66");
-        });
-
-        red.setOnMouseEntered(e -> {
-            red.setStyle("-fx-background-color: #ff6666");
-        });
-
-        red.setOnMouseExited(e -> {
-            red.setStyle("-fx-background-color: #ff3300");
-        });
-
-        green.setOnMouseEntered(e -> {
-            green.setStyle("-fx-background-color: #33cc33");
-        });
-
-        green.setOnMouseExited(e -> {
-            green.setStyle("-fx-background-color: #55aa33");
-        });
-
-        blue.setOnMouseEntered(e -> {
-            blue.setStyle("-fx-background-color: #99ccff");
-        });
-
-        blue.setOnMouseExited(e -> {
-            blue.setStyle("-fx-background-color: #0099ff");
-        });
+        setBlink(red, "ff6666", "ff3300");
+        setBlink(green, "33cc33", "55aa33");
+        setBlink(blue, "99ccff", "0099ff");
+        setBlink(yellow,"ffffbb", "ffff66");
 
         start.setOnMousePressed(e -> {
+
             pane.getChildren().remove(start);
+            if (order[turn] == 1){
+                light(blue, "99ccff", "0099ff");
+            }
 
-            new AnimationTimer(){
-                public void handle(long currentNanoTime){
+            else if (order[turn] == 2){
+                light(yellow, "ffffbb", "ffff66");
+            }
 
-                }
-            }.start();
+            else if (order[turn] == 3){
+                light(red, "ff6666", "ff3300");
+            }
+
+            else{
+                light(green, "33cc33", "55aa33");
+            }
         });
-
-
 
         Scene scene = new Scene(pane, 500, 500);
         primaryStage.setScene(scene);
