@@ -68,7 +68,7 @@ public class BALL extends Breakout {
     }
 
     public void resetBall() {
-        this.ball =
+        this.imageView.setX(WIDTH / 2 - this.imageView.getBoundsInLocal().getWidth() / 2);
     }
 
 
