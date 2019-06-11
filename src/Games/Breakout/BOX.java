@@ -24,7 +24,7 @@ public class BOX {
     }
 
 
-    public String checkBrickType() {
+    public String checkBOXType() {
         return this.boxType;
     }
 
@@ -32,15 +32,15 @@ public class BOX {
         this.boxLives--;
     }
 
-    public int checkBrickLives() {
+    public int checkBOXLives() {
         return this.boxLives;
     }
 
-    public ImageView getBrickIV() {
+    public ImageView getBOXIV() {
         return this.box;
     }
 
-    public void setBrickPos(double x, double y) {
+    public void setBOXPos(double x, double y) {
         this.box.setX(x);
         this.box.setY(y);
     }

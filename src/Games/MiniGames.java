@@ -60,11 +60,11 @@ public class MiniGames extends Application {
         fp.getChildren().addAll(view, minesweeper, view2, snake);
         fp2.getChildren().addAll(view3,simon,view4, breakout);
 
-        simon.setOnAction(e -> {
-
-
-            }
-        });
+//        simon.setOnAction(e -> {
+//
+//
+//            }
+//        });
 
 
         bp.setTop(p);
