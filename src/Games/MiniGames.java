@@ -1,6 +1,5 @@
 package Games;
 
-import Games.Simon.Test;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
