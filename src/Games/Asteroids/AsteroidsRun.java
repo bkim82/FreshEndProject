@@ -155,10 +155,10 @@ public class AsteroidsRun extends Application {
 
 
     public void start(Stage stage) throws Exception {
-        Scene scene = new Scene(createContent());
+        Scene scene = new Scene(createContent(),Color.BLACK);
         stage.setScene(scene);
 //        scene.getStylesheets().addAll(this.getClass().getResource("large.png").toExternalForm());
-        Background background = new Background(new Image ("large.png"));
+//        Background background = new Background(new Image ("large.png"));
 
         stage.getScene().setOnKeyPressed(e -> {
             if (e.getCode() == KeyCode.LEFT) {
