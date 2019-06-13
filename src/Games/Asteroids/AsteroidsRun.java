@@ -1,10 +1,12 @@
 package Games.Asteroids;
 
+import Games.Simon.Simon_Says;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.geometry.Point2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -56,6 +58,7 @@ public class AsteroidsRun extends Application {
         return root;
     }
 
+
     private void addBullet(GameObject bullet, double x, double y) {
         bullets.add(bullet);
         addGameObject(bullet, x, y);
@@ -92,6 +95,17 @@ public class AsteroidsRun extends Application {
                     scoreBoard.setText("Score: " + score);
                     enemyCount--;
                     root.getChildren().removeAll(bullet.getView(), enemy.getView());
+                    if (score >= 50){
+                        Rectangle r =  new Rectangle(600, 600);
+                        r.setFill(Color.rgb(64, 64, 64, 0.7));
+                        Label l = new Label("You Won!");
+                        l.setTextFill(Color.WHITE);
+                        l.setTranslateX(300);
+                        l.setTranslateY(300);
+                        root.getChildren().addAll(l, r);
+
+
+                    }
                 }
 
             }
