@@ -27,6 +27,8 @@ public class GameObject {
         return velocity;
     }
 
+    public void die() {}
+
     public Node getView() {
         return view;
     }
