@@ -22,6 +22,7 @@ public class AsteroidsApp extends Application {
 
     private List<GameObject> bullets = new ArrayList<>();
     private List<GameObject> enemies = new ArrayList<>();
+    public int score = 0;
 
     private GameObject player;
 
@@ -66,6 +67,7 @@ public class AsteroidsApp extends Application {
                 if (bullet.isColliding(enemy)) {
                     bullet.setAlive(false);
                     enemy.setAlive(false);
+                    score++;
 
                     root.getChildren().removeAll(bullet.getView(), enemy.getView());
                 }
@@ -93,19 +95,25 @@ public class AsteroidsApp extends Application {
 
     private static class Enemy extends GameObject {
         Enemy() {
-            super(new Circle(15, 15, 15, Color.RED));
+
+            super(new Circle(15, 15, 15, Color.GRAY));
+
+
+
         }
     }
 
     private static class Bullet extends GameObject {
         Bullet() {
-            super(new Circle(5, 5, 5, Color.BROWN));
+            super(new Rectangle(5, 5, Color.RED));
         }
     }
 
 
+
+
     public void start(Stage stage) throws Exception {
-        stage.setScene(new Scene(createContent()));
+        stage.setScene(new Scene(createContent(),Color.BEIGE));
         stage.getScene().setOnKeyPressed(e -> {
             if (e.getCode() == KeyCode.LEFT) {
                 player.rotateLeft();
@@ -119,6 +127,7 @@ public class AsteroidsApp extends Application {
         });
         stage.show();
     }
+
 
     public static void main(String[] args) {
         launch(args);
