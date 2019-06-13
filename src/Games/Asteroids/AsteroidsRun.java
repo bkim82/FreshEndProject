@@ -5,10 +5,11 @@ import javafx.application.Application;
 import javafx.geometry.Point2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -20,13 +21,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class AsteroidsApp extends Application {
+public class AsteroidsRun extends Application {
 
     private Pane root;
-
-    private Label scoreBoard;
-
-    private int enemyCount;
 
     private List<GameObject> bullets = new ArrayList<>();
     private List<GameObject> enemies = new ArrayList<>();
@@ -62,18 +59,31 @@ public class AsteroidsApp extends Application {
     }
 
     private void addEnemy(GameObject enemy, double x, double y) {
-        if (enemyCount == 14){
-            return;
-        }
         enemies.add(enemy);
         addGameObject(enemy, x, y);
-        enemyCount++;
     }
 
     private void addGameObject(GameObject object, double x, double y) {
         object.getView().setTranslateX(x);
         object.getView().setTranslateY(y);
         root.getChildren().add(object.getView());
+    }
+
+    private void addScoreBoard() {
+
+
+        Button board = new Button();
+
+        board.setText("Lives:");
+        board.setFont(Font.font("Verdana", 30));
+        board.setTextFill(Color.LIGHTGREEN);
+        board.setStyle("-fx-background-color: #55aa33");
+        board.prefWidthProperty().bind(root.widthProperty().divide(3));
+        board.prefHeightProperty().bind(root.heightProperty().divide(7));
+        board.layoutYProperty().bind(root.heightProperty().divide(50));
+        board.layoutXProperty().bind(root.widthProperty().divide(1.6));
+
+        root.getChildren().add(board);
     }
 
 //    private void PlayerMeetsAsteroid() {
@@ -89,13 +99,15 @@ public class AsteroidsApp extends Application {
                     bullet.setAlive(false);
                     enemy.setAlive(false);
                     score++;
-                    scoreBoard.setText("Score: " + score);
-                    enemyCount--;
+
                     root.getChildren().removeAll(bullet.getView(), enemy.getView());
                 }
 
             }
         }
+
+
+
 
 
         bullets.removeIf(GameObject::isDead);
@@ -111,6 +123,8 @@ public class AsteroidsApp extends Application {
         }
     }
 
+
+
     private static class Player extends GameObject {
         Player() {
 //            super.GameObject(rocket);
@@ -121,9 +135,9 @@ public class AsteroidsApp extends Application {
     private static class Enemy extends GameObject {
         Enemy() {
 
-//            super(new ImageView("image/asteroid_three.ico"));
+            super(new ImageView("image/asteroid_four" +
+                    ".png"));
 
-            super(new Circle(15, 15, 15, Color.DARKGRAY));
 
 
         }
@@ -140,19 +154,13 @@ public class AsteroidsApp extends Application {
 
 
 
-    public void start(Stage primaryStage) {
-        primaryStage.setScene(new Scene(createContent(),Color.BEIGE));
+    public void start(Stage stage) throws Exception {
+        Scene scene = new Scene(createContent());
+        stage.setScene(scene);
+//        scene.getStylesheets().addAll(this.getClass().getResource("large.png").toExternalForm());
+        Background background = new Background(new Image ("large.png"));
 
-        root.setStyle("-fx-background-color: #707070");
-
-        scoreBoard = new Label();
-
-        scoreBoard.setText("Score: " + score);
-        scoreBoard.setFont(Font.font("Times New Roman", 40));
-        scoreBoard.setTranslateX(10);
-        root.getChildren().add(scoreBoard);
-
-        primaryStage.getScene().setOnKeyPressed(e -> {
+        stage.getScene().setOnKeyPressed(e -> {
             if (e.getCode() == KeyCode.LEFT) {
                 player.rotateLeft();
             } else if (e.getCode() == KeyCode.RIGHT) {
@@ -160,12 +168,12 @@ public class AsteroidsApp extends Application {
             } else if (e.getCode() == KeyCode.SPACE) {
                 Bullet bullet = new Bullet();
                 bullet.setVelocity(player.getVelocity().normalize().multiply(5));
-                addBullet(bullet, player.getView().getTranslateX()+25, player.getView().getTranslateY()+20);
+                addBullet(bullet, player.getView().getTranslateX()+90, player.getView().getTranslateY()+20);
             }
         });
 
 
-        primaryStage.show();
+        stage.show();
     }
 
 
