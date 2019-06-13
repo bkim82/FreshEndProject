@@ -121,9 +121,9 @@ public class AsteroidsApp extends Application {
     private static class Enemy extends GameObject {
         Enemy() {
 
-//            super(new ImageView("image/asteroid_three.ico"));
+          super(new ImageView("image/asteroid_four.png"));
 
-            super(new Circle(15, 15, 15, Color.DARKGRAY));
+//            super(new Circle(15, 15, 15, Color.DARKGRAY));
 
 
         }
