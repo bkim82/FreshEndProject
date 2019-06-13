@@ -6,6 +6,7 @@ import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -23,11 +24,32 @@ public class Menu_Screen extends Application {
     public void start(Stage primaryStage) {
 
         Pane pane = new Pane();
+        pane.setStyle("-fx-background-color: #707070");
         BorderPane bp = new BorderPane();
 
-        Button play = new Button("PLAY!");
-        play.resize(60,60);
-        play.alignmentProperty();
+        Image astero = new Image("image/aster.png");
+
+        ImageView aster1 = new ImageView(astero);
+        aster1.setFitWidth(150);
+        aster1.setFitHeight(150);
+        aster1.setX(-15);
+        aster1.setY(280);
+        pane.getChildren().add(aster1);
+
+        ImageView aster2 = new ImageView(astero);
+        aster2.setFitWidth(150);
+        aster2.setFitHeight(150);
+        aster2.setX(450);
+        aster2.setY(280);
+        pane.getChildren().add(aster2);
+
+        Image play = new Image("image/play.png");
+        ImageView player = new ImageView(play);
+        player.setX(120);
+        player.setY(255);
+        player.setFitHeight(200);
+        player.setFitWidth(350);
+        pane.getChildren().add(player);
 
 
         Text text = new Text("To play, you move the direction of where the ship shoots with the left and right buttons." +
@@ -38,23 +60,22 @@ public class Menu_Screen extends Application {
         text.setWrappingWidth(500);
         text.setFill(Color.GRAY);
         text.setTranslateY(60);
-        text.setTranslateX(30);
+        text.setTranslateX(65);
 
 
         pane.getChildren().addAll(text);
 
         bp.setCenter(pane);
-        bp.setBottom(play);
 
-        AsteroidsApp sim1 = new AsteroidsApp();
-//        play.setOnMousePressed(e -> sim1.main(e));
+        AsteroidsApp asteroid = new AsteroidsApp();
+        player.setOnMousePressed(e -> asteroid.start(primaryStage));
 
         text.setFill(Color.BLACK);
 
 //        pane.getChildren().add(text);
 
 
-        Scene scene = new Scene(bp, 570, 500);
+        Scene scene = new Scene(bp, 610, 500);
         primaryStage.setTitle("Menu Screen"); // Set the stage title
         primaryStage.setScene(scene); // Place the scene in the stage
         primaryStage.show(); // Display the stage
