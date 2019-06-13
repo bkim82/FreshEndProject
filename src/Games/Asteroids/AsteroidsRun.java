@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class AsteroidsApp extends Application {
+public class AsteroidsRun extends Application {
 
     private Pane root;
 
@@ -121,9 +121,9 @@ public class AsteroidsApp extends Application {
     private static class Enemy extends GameObject {
         Enemy() {
 
-//            super(new ImageView("image/asteroid_three.ico"));
+            super(new ImageView("image/asteroid_four.png"));
 
-            super(new Circle(15, 15, 15, Color.DARKGRAY));
+//            super(new Circle(15, 15, 15, Color.DARKGRAY));
 
 
         }
@@ -141,15 +141,16 @@ public class AsteroidsApp extends Application {
 
 
     public void start(Stage primaryStage) {
-        primaryStage.setScene(new Scene(createContent(),Color.BEIGE));
+        primaryStage.setScene(new Scene(createContent(),Color.BLACK));
 
-        root.setStyle("-fx-background-color: #707070");
+        root.setStyle("-fx-background-color: #000000");
 
         scoreBoard = new Label();
 
         scoreBoard.setText("Score: " + score);
         scoreBoard.setFont(Font.font("Times New Roman", 40));
         scoreBoard.setTranslateX(10);
+        scoreBoard.setTextFill(Color.WHITE);
         root.getChildren().add(scoreBoard);
 
         primaryStage.getScene().setOnKeyPressed(e -> {
