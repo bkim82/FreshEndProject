@@ -20,6 +20,8 @@ public class AsteroidsApp extends Application {
 
     private Pane root;
 
+    private Stage stage;
+
     private List<GameObject> bullets = new ArrayList<>();
     private List<GameObject> enemies = new ArrayList<>();
     public int score = 0;
@@ -99,7 +101,6 @@ public class AsteroidsApp extends Application {
             super(new Circle(15, 15, 15, Color.GRAY));
 
 
-
         }
     }
 
@@ -110,10 +111,8 @@ public class AsteroidsApp extends Application {
     }
 
 
-
-
-    public void start(Stage stage) throws Exception {
-        stage.setScene(new Scene(createContent(),Color.BEIGE));
+    public void start(Stage primaryStage) {
+        stage.setScene(new Scene(createContent(), Color.BEIGE));
         stage.getScene().setOnKeyPressed(e -> {
             if (e.getCode() == KeyCode.LEFT) {
                 player.rotateLeft();
@@ -127,9 +126,6 @@ public class AsteroidsApp extends Application {
         });
         stage.show();
     }
-
-
-    public static void main(String[] args) {
-        launch(args);
-    }
 }
+
+

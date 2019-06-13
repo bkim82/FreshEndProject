@@ -44,9 +44,8 @@ public class Menu_Screen extends Application {
         bp.setCenter(pane);
 
         AsteroidsApp sim1 = new AsteroidsApp();
-//        play.setOnMousePressed(e -> sim1.main(primaryStage));
+        play.setOnMousePressed(e -> sim1.start(primaryStage));
 
-        // Set a random color and opacity
         text.setFill(Color.BLACK);
 
 //        pane.getChildren().add(text);
