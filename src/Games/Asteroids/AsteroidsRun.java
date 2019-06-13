@@ -175,7 +175,7 @@ public class AsteroidsRun extends Application {
             } else if (e.getCode() == KeyCode.SPACE) {
                 Bullet bullet = new Bullet();
                 bullet.setVelocity(player.getVelocity().normalize().multiply(5));
-                addBullet(bullet, player.getView().getTranslateX()+25, player.getView().getTranslateY()+20);
+                addBullet(bullet, player.getView().getTranslateX()+90, player.getView().getTranslateY()+20);
             }
         });
 

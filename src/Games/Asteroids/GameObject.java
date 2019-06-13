@@ -28,15 +28,11 @@ public class GameObject {
         return velocity;
     }
 
-    public void die() {this.life = false;}
 
     public Node getView() {
         return view;
     }
 
-    public boolean isAlive() {
-        return alive;
-    }
 
     public boolean isDead() {
         return !alive;
