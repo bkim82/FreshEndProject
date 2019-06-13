@@ -7,6 +7,7 @@ public class GameObject {
 
     private Node view;
     private Point2D velocity = new Point2D(0, 0);
+    public boolean life = true;
 
     private boolean alive = true;
 
@@ -27,7 +28,7 @@ public class GameObject {
         return velocity;
     }
 
-    public void die() {}
+    public void die() {this.life = false;}
 
     public Node getView() {
         return view;
@@ -62,4 +63,10 @@ public class GameObject {
     public boolean isColliding(GameObject other) {
         return getView().getBoundsInParent().intersects(other.getView().getBoundsInParent());
     }
+
+//    public GameObject die(GameObject other) {
+//
+//    }
+
+
 }

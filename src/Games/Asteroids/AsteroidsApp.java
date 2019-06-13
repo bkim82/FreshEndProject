@@ -5,6 +5,8 @@ import javafx.application.Application;
 import javafx.geometry.Point2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -20,11 +22,11 @@ public class AsteroidsApp extends Application {
 
     private Pane root;
 
-    private Stage stage;
-
     private List<GameObject> bullets = new ArrayList<>();
     private List<GameObject> enemies = new ArrayList<>();
     public int score = 0;
+    Image rocket = new Image ("image/rocket.png");
+
 
     private GameObject player;
 
@@ -42,6 +44,7 @@ public class AsteroidsApp extends Application {
                 onUpdate();
             }
         };
+
         timer.start();
 
         return root;
@@ -63,6 +66,12 @@ public class AsteroidsApp extends Application {
         root.getChildren().add(object.getView());
     }
 
+//    private void PlayerMeetsAsteroid() {
+//        player.isColliding(bullets);
+//
+//    }
+//    }
+
     private void onUpdate() {
         for (GameObject bullet : bullets) {
             for (GameObject enemy : enemies) {
@@ -73,8 +82,13 @@ public class AsteroidsApp extends Application {
 
                     root.getChildren().removeAll(bullet.getView(), enemy.getView());
                 }
+
             }
         }
+
+
+
+
 
         bullets.removeIf(GameObject::isDead);
         enemies.removeIf(GameObject::isDead);
@@ -89,14 +103,19 @@ public class AsteroidsApp extends Application {
         }
     }
 
+
+
     private static class Player extends GameObject {
         Player() {
-            super(new Rectangle(40, 20, Color.BLUE));
+//            super.GameObject(rocket);
+            super(new ImageView("image/asteroid_two.png"));
         }
     }
 
     private static class Enemy extends GameObject {
         Enemy() {
+
+//            super(new ImageView("image/asteroid_three.ico"));
 
             super(new Circle(15, 15, 15, Color.GRAY));
 
@@ -106,13 +125,18 @@ public class AsteroidsApp extends Application {
 
     private static class Bullet extends GameObject {
         Bullet() {
+
             super(new Rectangle(5, 5, Color.RED));
+
         }
     }
 
 
-    public void start(Stage primaryStage) {
-        stage.setScene(new Scene(createContent(), Color.BEIGE));
+
+
+    public void start(Stage stage) throws Exception {
+        stage.setScene(new Scene(createContent(),Color.BEIGE));
+
         stage.getScene().setOnKeyPressed(e -> {
             if (e.getCode() == KeyCode.LEFT) {
                 player.rotateLeft();
@@ -121,11 +145,16 @@ public class AsteroidsApp extends Application {
             } else if (e.getCode() == KeyCode.SPACE) {
                 Bullet bullet = new Bullet();
                 bullet.setVelocity(player.getVelocity().normalize().multiply(5));
-                addBullet(bullet, player.getView().getTranslateX(), player.getView().getTranslateY());
+                addBullet(bullet, player.getView().getTranslateX()+25, player.getView().getTranslateY()+20);
             }
         });
+
+
         stage.show();
     }
+
+
+    public static void main(String[] args) {
+        launch(args);
+    }
 }
-
-

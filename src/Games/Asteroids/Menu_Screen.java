@@ -26,11 +26,13 @@ public class Menu_Screen extends Application {
         BorderPane bp = new BorderPane();
 
         Button play = new Button("PLAY!");
+        play.resize(60,60);
+        play.alignmentProperty();
 
 
         Text text = new Text("To play, you move the direction of where the ship shoots with the left and right buttons." +
                 " Press space to shoot bullets, destroying the asteroids in front of the ship. You die" +
-                "as soon as you hit the asteroid with your ship.");
+                " as soon the asteroid hits you.");
         text.setTextAlignment(TextAlignment.CENTER);
         text.setFont(Font.font("Times New Roman", 30));
         text.setWrappingWidth(500);
@@ -39,12 +41,13 @@ public class Menu_Screen extends Application {
         text.setTranslateX(30);
 
 
-        pane.getChildren().add(text);
-        bp.setBottom(play);
+        pane.getChildren().addAll(text);
+
         bp.setCenter(pane);
+        bp.setBottom(play);
 
         AsteroidsApp sim1 = new AsteroidsApp();
-        play.setOnMousePressed(e -> sim1.start(primaryStage));
+//        play.setOnMousePressed(e -> sim1.main(e));
 
         text.setFill(Color.BLACK);
 
