@@ -1,8 +1,6 @@
 package Games.Simon;
 
-import javafx.animation.KeyFrame;
 import javafx.animation.PauseTransition;
-import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -34,12 +32,6 @@ public class Simon_Says extends Application {
 
     private Button red, green, blue, yellow;
 
-    private final int BLUE = 1;
-    private final int YELLOW = 2;
-    private final int RED = 3;
-    private final int GREEN = 4;
-
-    private Scene scene;
     private Pane pane;
 
     private Button reset;
@@ -58,10 +50,6 @@ public class Simon_Says extends Application {
 
     private Label counter;
 
-    private int clicked;
-
-    private boolean clickable = false;
-
     private PauseTransition pause = new PauseTransition(Duration.millis(750));
 
     private Circle wrong;
@@ -69,7 +57,7 @@ public class Simon_Says extends Application {
 
     private int turn = 1;
 
-    public Button create(String style, Color stroke, double translateX, double translateY, Pane pane){
+    private Button create(String style, Color stroke, double translateX, double translateY, Pane pane){
         Button b = new Button();
         b.setStyle("-fx-background-color: #" + style);
         b.setBorder(new Border(new BorderStroke(stroke,
@@ -79,14 +67,14 @@ public class Simon_Says extends Application {
         return b;
     }
 
-    public void reset(Stage primaryStage){
+    private void reset(Stage primaryStage){
         order.clear();
         turn = 1;
         pos = -1;
         start(primaryStage);
     }
 
-    public void setBlink(Button color, String valueEnd, String valueStart, MediaPlayer sound, int button){
+    private void setBlink(Button color, String valueEnd, String valueStart, MediaPlayer sound, int button){
         color.setOnMouseEntered(e -> color.setStyle("-fx-background-color: #" + valueEnd));
         color.setOnMouseExited(e -> color.setStyle("-fx-background-color: #" + valueStart));
         color.setOnAction(e -> {
@@ -96,8 +84,7 @@ public class Simon_Says extends Application {
         });
     }
 
-
-    public void blinkNext() {
+    private void blinkNext() {
         if(colors.hasNext()) {
             light(colors.next());
         }
@@ -106,7 +93,7 @@ public class Simon_Says extends Application {
         }
     }
 
-    public void blink(String prime, String end, Button color, MediaPlayer sound) {
+    private void blink(String prime, String end, Button color, MediaPlayer sound) {
         pause.setOnFinished(e -> {
             color.setStyle("-fx-background-color: #" + prime);
             blinkNext();
@@ -117,8 +104,7 @@ public class Simon_Says extends Application {
         pause.play();
     }
 
-
-    public void light(int button){
+    private void light(int button){
         if (button == 1){
             blink(BLUEPRIME, BLUEEND, blue, blue1);
         }
@@ -133,8 +119,7 @@ public class Simon_Says extends Application {
         }
     }
 
-
-    public void game(){
+    private void game(){
 
         colors = order.iterator();
         blinkNext();
@@ -147,16 +132,14 @@ public class Simon_Says extends Application {
         }
     }
 
-
-
-    public void checkPress (int color) {
+    private void checkPress (int color) {
         int expectedColor = order.get(pos);
 
         if (expectedColor == color) {
             pos++;
             counter.setText(pos + " / " + turn);
             if (pos == order.size()) {
-                pause.setDuration(Duration.millis(1100));
+                pause.setDuration(Duration.millis(1300));
                 pause.setOnFinished(e -> {
                     pause.setDuration(Duration.millis(750));
                     right.setFill(Color.LIGHTGREEN);
@@ -170,6 +153,7 @@ public class Simon_Says extends Application {
                 pause.play();
             }
         }
+
         else {
             pause.setOnFinished(e -> wrong.setFill(Color.RED));
             wrong.setFill(Color.CRIMSON);
@@ -178,19 +162,22 @@ public class Simon_Says extends Application {
 
             Rectangle r = new Rectangle(500, 500);
             r.setFill(Color.rgb(64, 64, 64, 0.7));
+            r.widthProperty().bind(pane.widthProperty());
+            r.heightProperty().bind(pane.heightProperty());
             pane.getChildren().add(r);
             pane.getChildren().add(reset);
 
-            Label go = new Label();
-            go.setText("GAME OVER");
-
         }
-
     }
 
     public void start(Stage primaryStage){
 
         order.add((int)(Math.random() * 4) + 1);
+
+        final int BLUE = 1;
+        final int YELLOW = 2;
+        final int RED = 3;
+        final int GREEN = 4;
 
         pane = new Pane();
         pane.setStyle("-fx-background-color: #404040");
@@ -211,7 +198,7 @@ public class Simon_Says extends Application {
         blue.prefHeightProperty().bind(pane.heightProperty().divide(4));
         blue.prefWidthProperty().bind(pane.widthProperty().divide(4));
 
-        Image image = new Image("image/simon1.png");
+        Image image = new Image("image/simon2.png");
         ImageView logo = new ImageView(image);
         logo.fitWidthProperty().bind(pane.widthProperty().divide(3));
         logo.fitHeightProperty().bind(pane.heightProperty().divide(3));
@@ -283,7 +270,7 @@ public class Simon_Says extends Application {
 
         reset.setOnAction(e -> reset(primaryStage));
 
-        scene = new Scene(pane, 500, 500);
+        Scene scene = new Scene(pane, 500, 500);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Simon");
         primaryStage.show();
